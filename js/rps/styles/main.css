@@ -1,0 +1,13 @@
+/* CSS Here */
+
+body {
+	background-color: white;
+	padding: 0;
+	margin: 0;
+}
+
+canvas {
+	height: 400px;
+	width: 400px;
+	border: 1px solid black;
+}
