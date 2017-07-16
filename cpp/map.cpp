@@ -13,6 +13,7 @@ struct lelem {
 class Map {
     private:
         lelem* head;
+        bool contains(int k);
 
     public:
         Map();
@@ -37,16 +38,36 @@ Map::~Map() {
     }
 }
 
+bool Map::contains(int k) {
+    if (!head)
+        return false;
+
+    lelem *tmp = head;
+
+    while (tmp) {
+        if (tmp->key == k)
+            return true;
+        tmp = tmp->next;
+    }
+
+    return false;
+}
+
 bool Map::insert(int k, string d) {
-    try {
-        lelem *item = new lelem;
-        item->data = d;
-        item->key = k;
-        item->next = head;
-        head = item;
-        cout << "Inserting k = " << k << ", v = " << d << endl;
-        return true;
-    } catch (...) {
+    if (!contains(k)) {
+        try {
+            lelem *item = new lelem;
+            item->data = d;
+            item->key = k;
+            item->next = head;
+            head = item;
+            cout << "Inserting k = " << k << ", v = " << d << endl;
+            return true;
+        } catch (...) {
+            return false;
+        }
+    } else {
+        cout << "Item with key " << k << " already in map.\n";
         return false;
     }
 }
@@ -101,6 +122,8 @@ string Map::getData(int k) {
 int main() {
     Map map;
     map.insert(1, "test");
-    map.getData(2);
+    map.insert(2, "yo");
+    map.insert(1, "another");
+    map.getData(3);
     return 0;
 }
